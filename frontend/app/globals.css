@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Segoe UI", "SF Pro Display", -apple-system, ui-sans-serif, system-ui, sans-serif;
+  --font-body: -apple-system, "SF Pro Text", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+
+  --color-primary-50: #f3f1ff;
+  --color-primary-100: #e9e5ff;
+  --color-primary-200: #d5cdff;
+  --color-primary-300: #b6a6ff;
+  --color-primary-400: #9575ff;
+  --color-primary-500: #7c5cff;
+  --color-primary-600: #6d3ffb;
+  --color-primary-700: #5d2fe0;
+  --color-primary-800: #4c27b5;
+  --color-primary-900: #3f2390;
+
+  --color-ink-900: #1a1533;
+  --color-ink-700: #33294f;
+  --color-ink-500: #6b6285;
+  --color-ink-400: #8d84a6;
+  --color-ink-300: #b3abc9;
+
+  --color-canvas: #f7f5fd;
+  --color-canvas-alt: #efebfb;
+
+  --color-mint-500: #22c58b;
+  --color-mint-100: #dcf9ee;
+  --color-amber-500: #f5a524;
+  --color-amber-100: #fdf0d8;
+  --color-coral-500: #ff6b81;
+  --color-coral-100: #ffe3e8;
+  --color-sky-500: #3aa8ff;
+  --color-sky-100: #e2f2ff;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-canvas);
+  color: var(--color-ink-900);
+  font-family: var(--font-body);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+::selection {
+  background: var(--color-primary-200);
+  color: var(--color-ink-900);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

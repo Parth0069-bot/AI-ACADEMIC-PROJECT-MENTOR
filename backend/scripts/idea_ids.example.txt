@@ -1,0 +1,5 @@
+# Copy this file to idea_ids.txt and paste in real IDs from your
+# project_ideas table (Supabase -> Table Editor -> project_ideas ->
+# click a row -> copy its id column). One ID per line.
+1ea7e2f7-9d08-4b35-b95a-5d0c00000000
+3df1bbaf-c4f7-4d4d-81a8-32b000000000

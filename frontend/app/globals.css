@@ -1,0 +1,316 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Segoe UI", "SF Pro Display", -apple-system, ui-sans-serif, system-ui, sans-serif;
+  --font-body: -apple-system, "SF Pro Text", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+
+  --color-primary-50: #f3f1ff;
+  --color-primary-100: #e9e5ff;
+  --color-primary-200: #d5cdff;
+  --color-primary-300: #b6a6ff;
+  --color-primary-400: #9575ff;
+  --color-primary-500: #7c5cff;
+  --color-primary-600: #6d3ffb;
+  --color-primary-700: #5d2fe0;
+  --color-primary-800: #4c27b5;
+  --color-primary-900: #3f2390;
+
+  --color-ink-900: #1a1533;
+  --color-ink-700: #33294f;
+  --color-ink-500: #6b6285;
+  --color-ink-400: #8d84a6;
+  --color-ink-300: #b3abc9;
+
+  --color-canvas: #f7f5fd;
+  --color-canvas-alt: #efebfb;
+
+  --color-surface: #ffffff;
+  --color-surface-alt: #faf9ff;
+
+  --color-mint-500: #22c58b;
+  --color-mint-100: #dcf9ee;
+  --color-amber-500: #f5a524;
+  --color-amber-100: #fdf0d8;
+  --color-coral-500: #ff6b81;
+  --color-coral-100: #ffe3e8;
+  --color-sky-500: #3aa8ff;
+  --color-sky-100: #e2f2ff;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-canvas);
+  color: var(--color-ink-900);
+  font-family: var(--font-body);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+::selection {
+  background: var(--color-primary-200);
+  color: var(--color-ink-900);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===========================================
+   Dark theme — override every design token
+   =========================================== */
+.dark {
+  --color-canvas: #0c0a14;
+  --color-canvas-alt: #141025;
+
+  --color-surface: #1a1530;
+  --color-surface-alt: #211c3a;
+
+  --color-ink-900: #f0edf8;
+  --color-ink-700: #cbc4e0;
+  --color-ink-500: #9e95b8;
+  --color-ink-400: #7d74a0;
+  --color-ink-300: #4d4568;
+
+  --color-primary-50: rgba(124, 92, 255, 0.08);
+  --color-primary-100: rgba(124, 92, 255, 0.15);
+  --color-primary-200: rgba(124, 92, 255, 0.25);
+  --color-primary-300: rgba(124, 92, 255, 0.35);
+
+  --color-mint-100: rgba(34, 197, 139, 0.15);
+  --color-amber-100: rgba(245, 165, 36, 0.15);
+  --color-coral-100: rgba(255, 107, 129, 0.15);
+  --color-sky-100: rgba(58, 168, 255, 0.15);
+}
+
+/* ============================================================
+   Premium UI layer — glass, gradient borders, mesh backgrounds,
+   glow shadows, shimmer text. Additive only; nothing above this
+   line changes, so existing pages keep their current look unless
+   they opt into these classes.
+   ============================================================ */
+
+@keyframes drift-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, -24px) scale(1.08); }
+}
+@keyframes drift-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-24px, 20px) scale(1.05); }
+}
+@keyframes shimmer-sweep {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+@keyframes count-pop {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.68);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+.dark .glass-panel {
+  background: rgba(26, 21, 48, 0.75);
+  border-color: rgba(124, 92, 255, 0.15);
+}
+
+/* Animated gradient ring that only appears on hover — layer this on
+   top of any relatively-positioned rounded container. */
+.gradient-ring {
+  position: relative;
+  isolation: isolate;
+}
+.gradient-ring::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(135deg, var(--color-primary-400), var(--color-sky-500) 45%, var(--color-mint-500) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+.gradient-ring:hover::before {
+  opacity: 1;
+}
+
+.mesh-bg {
+  position: relative;
+  overflow: hidden;
+}
+.mesh-bg::before,
+.mesh-bg::after {
+  content: "";
+  position: absolute;
+  width: 55%;
+  height: 140%;
+  top: -20%;
+  border-radius: 999px;
+  filter: blur(60px);
+  z-index: 0;
+  pointer-events: none;
+}
+.mesh-bg::before {
+  left: -10%;
+  background: radial-gradient(circle, rgba(124, 92, 255, 0.35), transparent 70%);
+  animation: drift-a 14s ease-in-out infinite;
+}
+.mesh-bg::after {
+  right: -10%;
+  background: radial-gradient(circle, rgba(58, 168, 255, 0.28), transparent 70%);
+  animation: drift-b 16s ease-in-out infinite;
+}
+.mesh-bg > * {
+  position: relative;
+  z-index: 1;
+}
+
+.shimmer-text {
+  background: linear-gradient(
+    100deg,
+    var(--color-ink-900) 40%,
+    var(--color-primary-500) 50%,
+    var(--color-ink-900) 60%
+  );
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer-sweep 6s linear infinite;
+}
+
+.dot-grid {
+  background-image: radial-gradient(var(--color-primary-200) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+.glow-primary { box-shadow: 0 8px 30px -6px rgba(124, 92, 255, 0.45); }
+.glow-mint { box-shadow: 0 8px 30px -6px rgba(34, 197, 139, 0.4); }
+.glow-amber { box-shadow: 0 8px 30px -6px rgba(245, 165, 36, 0.4); }
+.glow-sky { box-shadow: 0 8px 30px -6px rgba(58, 168, 255, 0.4); }
+.glow-coral { box-shadow: 0 8px 30px -6px rgba(255, 107, 129, 0.4); }
+
+/* ============================================================
+   Storybook — realistic, skeuomorphic open-book shell
+   ============================================================ */
+
+/* The "cover" / desk-facing shell — leather-ish gradient plus a
+   stack of shadows that read as physical thickness lifting the
+   book off the page behind it. */
+.storybook-shell {
+  background: linear-gradient(160deg, #e2cfa9 0%, #cdb995 42%, #b49b73 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -10px 18px rgba(75, 56, 30, 0.22),
+    0 1px 0 rgba(255, 255, 255, 0.3),
+    0 10px 18px -8px rgba(75, 56, 30, 0.35),
+    0 30px 55px -18px rgba(60, 44, 24, 0.45),
+    0 55px 100px -30px rgba(50, 36, 18, 0.5);
+}
+
+/* The open paper surface itself — warm, high-contrast cream so the
+   dark ink text stays easy to read. */
+.storybook-page-surface {
+  background: linear-gradient(180deg, #faf7ee 0%, #f5f1e8 6%, #f5f1e8 94%, #ede4cd 100%);
+  box-shadow:
+    inset 0 0 46px rgba(139, 111, 66, 0.1),
+    inset 0 2px 10px rgba(83, 63, 37, 0.08),
+    inset 0 -2px 10px rgba(83, 63, 37, 0.05);
+}
+
+/* Realistic center fold: light catches the page edges near the
+   gutter, then falls into a soft core shadow right at the crease
+   before lifting back to light on the far side — simulating page
+   curvature instead of a single flat line. */
+.storybook-spine {
+  background: linear-gradient(
+    90deg,
+    rgba(83, 63, 37, 0) 0%,
+    rgba(255, 250, 235, 0.5) 38%,
+    rgba(83, 63, 37, 0.16) 46%,
+    rgba(35, 24, 11, 0.42) 50%,
+    rgba(83, 63, 37, 0.16) 54%,
+    rgba(255, 250, 235, 0.5) 62%,
+    rgba(83, 63, 37, 0) 100%
+  );
+  filter: blur(0.4px);
+}
+
+/* Subtle page-curl shading on the outer left/right edges of each
+   leaf, away from the spine. */
+.storybook-curve-left {
+  background: linear-gradient(90deg, rgba(83, 63, 37, 0.05) 0%, transparent 6%);
+}
+.storybook-curve-right {
+  background: linear-gradient(270deg, rgba(83, 63, 37, 0.05) 0%, transparent 6%);
+}
+
+/* ============================================================
+   Project Orbit — 3D orbital nav glyph
+   ============================================================ */
+
+@keyframes orbit-ring-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+@keyframes orbit-ring-spin-reverse {
+  from { transform: translate(-50%, -50%) rotate(360deg); }
+  to { transform: translate(-50%, -50%) rotate(0deg); }
+}
+@keyframes orbit-satellite-glow {
+  0%, 100% { opacity: 0.75; }
+  50% { opacity: 1; }
+}
+
+.orbit-icon-core {
+  background: radial-gradient(circle at 34% 30%, #c9b4ff 0%, #8f6bff 32%, #6d3ffb 62%, #4c27b5 100%);
+  box-shadow:
+    inset -2px -2px 3px rgba(30, 15, 90, 0.55),
+    inset 1px 1px 2px rgba(255, 255, 255, 0.6),
+    0 0 6px rgba(109, 63, 251, 0.55);
+}
+
+.orbit-icon-ring-a {
+  border: 1px solid rgba(109, 63, 251, 0.55);
+  border-top-color: rgba(255, 255, 255, 0.8);
+  animation: orbit-ring-spin 5s linear infinite;
+}
+
+.orbit-icon-ring-b {
+  border: 1px solid rgba(124, 92, 255, 0.32);
+  border-bottom-color: rgba(255, 255, 255, 0.55);
+  animation: orbit-ring-spin-reverse 8s linear infinite;
+}
+
+.orbit-icon-satellite {
+  background: radial-gradient(circle at 35% 30%, #ffffff 0%, #c9b4ff 55%, #6d3ffb 100%);
+  box-shadow: 0 0 4px rgba(124, 92, 255, 0.9), 0 0 8px rgba(124, 92, 255, 0.6);
+  animation: orbit-satellite-glow 2.4s ease-in-out infinite;
+}
+
